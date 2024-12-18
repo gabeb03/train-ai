@@ -18,8 +18,8 @@ export default function () {
           borderBottomWidth="1px"
           borderBottomColor="rgba(255,255,255,0.2)"
         >
-          <Heading as="h1" size="xs" color="white">
-            Gabe was here
+          <Heading as="h1" size="xs">
+            Gadget x ChatGPT
           </Heading>
         </Flex>
         <CurrentChat user={user} />
