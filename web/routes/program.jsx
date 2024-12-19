@@ -43,7 +43,17 @@ export const Program = () => {
         });
 
         const initialCheckedSets = fetchedResults.reduce((acc, activity) => {
-          acc[activity.id] = new Array(activity.sets || 0).fill(false);
+          const activityDate = new Date(activity.updatedAt);
+          const initialCheckedSetsArr = [];
+          for (let i = 1; i <= activity.sets; i++) {
+            initialCheckedSetsArr.push(
+              i / activity.sets <= activity.percentComplete &&
+                activityDate.getDate() === currentDate.getDate() &&
+                activityDate.getMonth() === currentDate.getMonth() &&
+                activityDate.getFullYear() === currentDate.getFullYear()
+            );
+          }
+          acc[activity.id] = initialCheckedSetsArr;
           return acc;
         }, {});
 
@@ -66,11 +76,22 @@ export const Program = () => {
     fetchActivitiesAndScore();
   }, []);
 
-  const handleActivitySetsCheck = (activityId, setIndex) => {
+  const trueRatio = (array) => {
+    if (array.length === 0) return 0;
+    const trueCount = array.filter((value) => value === true).length;
+    return trueCount / array.length;
+  };
+
+  const handleActivitySetsCheck = async (activityId, setIndex) => {
+    let updatedActivitySets = null;
     setCheckedSets((prev) => {
       const activitySets = [...prev[activityId]];
       activitySets[setIndex] = !activitySets[setIndex];
-      return { ...prev, [activityId]: activitySets };
+      updatedActivitySets = { ...prev, [activityId]: activitySets };
+      return updatedActivitySets;
+    });
+    await api.activity.update(activityId, {
+      percentComplete: trueRatio(updatedActivitySets[activityId]),
     });
   };
 
