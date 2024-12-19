@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Box, Flex, Tooltip } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverArrow,
+  PopoverCloseButton,
+} from "@chakra-ui/react";
 import { api } from "../api";
 
 const getDaysInCurrentMonth = () => {
@@ -39,7 +49,6 @@ export const getWorkoutScores = async () => {
             (i * 7 + j - dayOfWeek) * 24 * 60 * 60 * 1000
         );
 
-        // TODO: make only 1 API call, getting all the stats for the month
         const scoreResults = await api.score.findMany({
           filter: {
             AND: [
@@ -109,29 +118,64 @@ export const ProgressGraph = ({ width = "full" }) => {
     return "gray.200";
   };
 
+  const generateEmoji = (score) => {
+    if (score <= 100 && score > 80) {
+      return "🔥";
+    } else if (score >= 80 && score > 60) {
+      return "💪";
+    } else if (score >= 60 && score > 40) {
+      return "🎉";
+    } else if (score >= 40 && score > 20) {
+      return "👍";
+    } else if (score >= 20 && score > 0) {
+      return "😔";
+    }
+
+    return "gray.200";
+  };
+
+  const DayPopover = ({ day }) => (
+    <Popover trigger="hover" placement="top">
+      <PopoverTrigger>
+        <Box
+          w={7}
+          h={7}
+          bg={getColorIntensity(day.score)}
+          borderRadius="sm"
+          cursor="pointer"
+        />
+      </PopoverTrigger>
+      <PopoverContent width="200px">
+        <PopoverArrow />
+        <PopoverCloseButton />
+        <PopoverHeader fontWeight="bold">
+          {day.date ? day.date.toDateString() : "No Data Available"}
+        </PopoverHeader>
+        <PopoverBody>
+          {day.date ? (
+            <>
+              <Box>
+                Score:{" "}
+                {day.score === -1
+                  ? "No data 😞"
+                  : `${day.score}% ${generateEmoji(day.score)}`}
+              </Box>
+            </>
+          ) : (
+            "This date is outside the current month"
+          )}
+        </PopoverBody>
+      </PopoverContent>
+    </Popover>
+  );
+
   return (
     <Box bg="white" width={width}>
       <Flex direction="column" gap={1}>
         {contributionData.map((week, weekIndex) => (
           <Flex key={weekIndex} gap={1}>
             {week.map((day, dayIndex) => (
-              <Tooltip
-                key={dayIndex}
-                label={
-                  day.date
-                    ? `${day.date.toDateString()}: ${
-                        day.score == -1 ? "No data" : day.score + "% completed"
-                      }`
-                    : "No data"
-                }
-              >
-                <Box
-                  w={7}
-                  h={7}
-                  bg={getColorIntensity(day.score)}
-                  borderRadius="sm"
-                />
-              </Tooltip>
+              <DayPopover key={dayIndex} day={day} />
             ))}
           </Flex>
         ))}

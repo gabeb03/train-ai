@@ -91,7 +91,8 @@ export const Program = () => {
       return updatedActivitySets;
     });
     await api.activity.update(activityId, {
-      percentComplete: trueRatio(updatedActivitySets[activityId]),
+      percentComplete:
+        Math.ceil(trueRatio(updatedActivitySets[activityId]) * 100) / 100,
     });
   };
 
@@ -103,11 +104,14 @@ export const Program = () => {
     return sets.some(Boolean) && !isAllSetsChecked(activityId);
   };
 
-  const toggleAllSets = (activityId) => {
+  const toggleAllSets = async (activityId) => {
+    const allChecked = isAllSetsChecked(activityId);
     setCheckedSets((prev) => {
       const currentSets = prev[activityId] || [];
-      const allChecked = isAllSetsChecked(activityId);
       return { ...prev, [activityId]: currentSets.map(() => !allChecked) };
+    });
+    await api.activity.update(activityId, {
+      percentComplete: allChecked ? 0 : 1,
     });
   };
 
