@@ -43,7 +43,7 @@ const ChatInput = () => {
 
       await respondToMessage(chat, message);
     } catch (error) {
-      console.log("error sending message: ", error);
+      console.error("error sending message: ", error);
     }
 
     setSendingMessage(false);
@@ -60,7 +60,7 @@ const ChatInput = () => {
       <InputGroup size="md">
         <Textarea
           ref={textAreaRef}
-          color="white"
+          color="black"
           placeholder="Send a message"
           value={input}
           onChange={(event) => {
@@ -90,9 +90,8 @@ const ChatInput = () => {
           ) : (
             <Button
               disabled={!hasInput || sendingDisabled}
-              color={hasInput ? "white" : "gray.500"}
+              color={hasInput ? "black" : "gray.200"}
               p={1}
-              bgColor={hasInput ? "purple.500" : undefined}
               cursor={hasInput ? "pointer" : "default"}
               borderRadius="md"
               onClick={sendMessage}

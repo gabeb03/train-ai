@@ -7,7 +7,7 @@ export const settings: GadgetSettings = {
     connections: { openai: true },
     authentications: {
       settings: {
-        redirectOnSignIn: "/chat-gpt",
+        redirectOnSignIn: "/chat",
         signInPath: "/sign-in",
         unauthorizedUserRedirect: "signInPath",
         defaultSignedInRoles: ["signed-in"],

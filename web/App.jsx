@@ -24,11 +24,11 @@ import ForgotPassword from "./routes/forgot-password";
 import { ChakraBaseProvider, Box } from "@chakra-ui/react";
 import { theme } from "@chakra-ui/theme";
 import { ChatProvider } from "./hooks/useChat";
-import { Program } from "./routes/program";
+import { Dashboard } from "./routes/dashboard";
 
 const App = () => {
   useEffect(() => {
-    document.title = `Gadget x ChatGPT`;
+    document.title = `Train.Ai`;
   }, []);
 
   const router = createBrowserRouter(
@@ -37,13 +37,13 @@ const App = () => {
         <Route
           index
           element={
-            <SignedOutOrRedirect path="/chat-gpt">
+            <SignedOutOrRedirect path="/chat">
               <Index />
             </SignedOutOrRedirect>
           }
         />
         <Route
-          path="chat-gpt"
+          path="chat"
           element={
             <SignedInOrRedirect>
               <ChatProvider>
@@ -86,7 +86,7 @@ const App = () => {
         />
         <Route path="reset-password" element={<ResetPasswordPage />} />
         <Route path="verify-email" element={<VerifyEmailPage />} />
-        <Route path="program" element={<Program />}></Route>
+        <Route path="dashboard" element={<Dashboard />}></Route>
       </Route>
     )
   );

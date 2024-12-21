@@ -13,7 +13,7 @@ export default function () {
       gap="12px"
     >
       <Heading as="h1" size="lg">
-        Gadget x ChatGPT
+        Train.Ai
       </Heading>
       <Link to="/sign-up">
         <Button variant="solid">Sign up</Button>

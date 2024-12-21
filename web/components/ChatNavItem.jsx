@@ -12,20 +12,18 @@ const ChatNavItem = (props) => {
       justifyContent="space-between"
       borderRadius="md"
       p={2}
-      bgColor={chat.id === currentChat?.id ? "gray.600" : undefined}
-      _hover={{ bgColor: "gray.600", cursor: "pointer" }}
+      bgColor={chat.id === currentChat?.id ? "gray.100" : undefined}
+      _hover={{ bgColor: "gray.100", cursor: "pointer" }}
       onClick={() => {
         selectChat(chat);
       }}
     >
       <Flex gap={3}>
-        <ChatIcon />
-        <Text color="white">{chat.name ?? "New chat"}</Text>
+        <Text>{chat.name ?? "New chat"}</Text>
       </Flex>
       <Button
         color="gray.300"
         variant="link"
-        _hover={{ color: "white" }}
         onClick={async (event) => {
           event.stopPropagation();
 
