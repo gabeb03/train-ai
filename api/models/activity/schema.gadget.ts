@@ -24,6 +24,7 @@ export const schema: GadgetModel = {
       ],
       storageKey: "MGeBOqBe1cE6",
     },
+    description: { type: "string", storageKey: "7r585XPL8MNf" },
     percentComplete: {
       type: "number",
       decimals: 2,

@@ -51,6 +51,7 @@ export const schema: GadgetModel = {
       storageKey:
         "ModelField-uTjf2OogUn_b::FieldStorageEpoch-Q1E7sB67m_9K",
     },
+    height: { type: "string", storageKey: "tw5SyKg_9jOW" },
     lastName: {
       type: "string",
       storageKey:
@@ -85,5 +86,13 @@ export const schema: GadgetModel = {
       storageKey:
         "ModelField-RAVPOYDKJ89s::FieldStorageEpoch-AjfWL2QwRRFj",
     },
+    sex: {
+      type: "enum",
+      acceptMultipleSelections: false,
+      acceptUnlistedOptions: false,
+      options: ["Male", "Female"],
+      storageKey: "0Lv5FCMe55vE",
+    },
+    weight: { type: "string", storageKey: "wSD2Ks_m5mbS" },
   },
 };
