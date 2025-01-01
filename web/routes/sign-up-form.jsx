@@ -1,12 +1,18 @@
 import { ArrowBackIcon } from "@chakra-ui/icons"; // Chakra's built-in back arrow icon
 import { CircularProgress, Flex, IconButton, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EnterHeight } from "../components/EnterHeight";
 import { EnterWeight } from "../components/EnterWeight";
 import { GenderSelectionPage } from "../components/GenderSelection";
 import { SportSelection } from "../components/SportSelection";
 
 export const SignupForm = () => {
+  const [userMetadata, setUserMetadata] = useState({
+    sex: "",
+    weight: 0,
+    height: 0,
+    experienceLevelMap: {},
+  });
   const [stepNum, setStepNum] = useState(1);
 
   const onNextStep = () => {
@@ -20,11 +26,24 @@ export const SignupForm = () => {
   };
 
   const signupSteps = [
-    <GenderSelectionPage nextPageCallback={onNextStep} />,
-    <EnterWeight nextPageCallback={onNextStep} />,
-    <EnterHeight nextPageCallback={onNextStep} />,
-    <SportSelection />,
+    <GenderSelectionPage
+      nextPageCallback={onNextStep}
+      setUserMetadata={setUserMetadata}
+    />,
+    <EnterWeight
+      nextPageCallback={onNextStep}
+      setUserMetadata={setUserMetadata}
+    />,
+    <EnterHeight
+      nextPageCallback={onNextStep}
+      setUserMetadata={setUserMetadata}
+    />,
+    <SportSelection setUserMetadata={setUserMetadata} />,
   ];
+
+  useEffect(() => {
+    console.log(userMetadata);
+  }, [userMetadata]);
 
   return (
     <>
@@ -40,7 +59,7 @@ export const SignupForm = () => {
           icon={<ArrowBackIcon />}
           aria-label="Go back"
           onClick={onPreviousStep}
-          isDisabled={stepNum === 1} // Disable the button on the first step
+          isDisabled={stepNum === 1}
           mb="2"
         />
       </Flex>

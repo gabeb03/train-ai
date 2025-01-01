@@ -10,15 +10,13 @@ import {
   SliderThumb,
   SliderTrack,
   Text,
-  Tooltip,
-  useEditable,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import CyclistOutline from "../assets/cyclist-outline.png";
 import RunnerOutline from "../assets/runner-outline.png";
 import WeightTrainingOutline from "../assets/weight-training-outline.png";
-import { useEffect, useState } from "react";
 
-export const SportSelection = () => {
+export const SportSelection = ({ setUserMetadata }) => {
   const sports = {
     "Weight Training": WeightTrainingOutline,
     Cycling: CyclistOutline,
@@ -40,6 +38,18 @@ export const SportSelection = () => {
   const [experienceLevelMap, setExperienceLevelMap] = useState(
     defaultExperienceLevel
   );
+
+  const handleButtonClick = () => {
+    const convertedExperienceLevelMap = {};
+    for (let sport in experienceLevelMap) {
+      convertedExperienceLevelMap[sport] =
+        experienceLevels[experienceLevelMap[sport]];
+    }
+    setUserMetadata((prev) => ({
+      ...prev,
+      experienceLevelMap: convertedExperienceLevelMap,
+    }));
+  };
 
   const SportSelection = ({ sportName, image, onClick }) => {
     const [sliderValue, setSliderValue] = useState(
@@ -122,7 +132,7 @@ export const SportSelection = () => {
           );
         })}
         <Box minWidth="900px" textAlign="right">
-          <Button>Done</Button>
+          <Button onClick={handleButtonClick}>Get Started</Button>
         </Box>
       </Flex>
     </Box>

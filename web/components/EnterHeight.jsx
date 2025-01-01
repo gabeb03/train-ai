@@ -15,30 +15,35 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-export const EnterHeight = ({ nextPageCallback }) => {
+export const EnterHeight = ({ nextPageCallback, setUserMetadata }) => {
   const Units = {
-    Centimeters: "Centimeters",
     FeetInches: "Feet/Inches",
+    Centimeters: "Centimeters",
   };
 
   const [selectedUnit, setSelectedUnit] = useState(Object.keys(Units)[0]);
-  const [heightCm, setHeightCm] = useState(""); // Default empty
-  const [feet, setFeet] = useState(""); // Default empty
-  const [inches, setInches] = useState(""); // Default empty
+  const [heightCm, setHeightCm] = useState("");
+  const [feet, setFeet] = useState("");
+  const [inches, setInches] = useState("");
 
   const handleMenuClick = (unit) => {
     setSelectedUnit(unit);
   };
 
   const convertToCm = (feet, inches) => {
-    return feet * 30.48 + inches * 2.54;
+    return parseFloat(feet) * 30.48 + parseFloat(inches) * 2.54;
   };
 
-  const convertToFeetInches = (cm) => {
-    const totalInches = cm / 2.54;
-    const feet = Math.floor(totalInches / 12);
-    const inches = Math.round(totalInches % 12);
-    return { feet, inches };
+  const handleButtonClick = () => {
+    const convertedHeight = convertToCm(feet, inches);
+    setUserMetadata((prev) => ({
+      ...prev,
+      height:
+        selectedUnit === "FeetInches" // The value of the Units "enum" is different from the key
+          ? convertedHeight
+          : parseFloat(heightCm),
+    }));
+    nextPageCallback();
   };
 
   return (
@@ -124,15 +129,15 @@ export const EnterHeight = ({ nextPageCallback }) => {
               </Menu>
               <Button
                 variant="solid"
-                onClick={nextPageCallback}
+                onClick={handleButtonClick}
                 display={["none", "block"]}
               >
-                Get Started
+                Next
               </Button>
             </Flex>
             <Button
               variant="solid"
-              onClick={nextPageCallback}
+              onClick={handleButtonClick}
               width="100%"
               display={["block", "none"]}
             >

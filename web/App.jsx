@@ -1,7 +1,9 @@
+import { Box, ChakraBaseProvider } from "@chakra-ui/react";
+import { theme } from "@chakra-ui/theme";
 import {
+  Provider,
   SignedInOrRedirect,
   SignedOutOrRedirect,
-  Provider,
 } from "@gadgetinc/react";
 import { Suspense, useEffect } from "react";
 import {
@@ -13,21 +15,17 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { api } from "./api";
-import Index from "./routes/index";
+import { ChatProvider } from "./hooks/useChat";
+import ChangePassword from "./routes/change-password";
 import Chat from "./routes/chat";
+import { Dashboard } from "./routes/dashboard";
+import ForgotPassword from "./routes/forgot-password";
+import Index from "./routes/index";
+import ResetPasswordPage from "./routes/reset-password";
 import SignInPage from "./routes/sign-in";
 import SignUpPage from "./routes/sign-up";
-import ResetPasswordPage from "./routes/reset-password";
+import { SignupForm } from "./routes/sign-up-form";
 import VerifyEmailPage from "./routes/verify-email";
-import ChangePassword from "./routes/change-password";
-import ForgotPassword from "./routes/forgot-password";
-import { ChakraBaseProvider, Box } from "@chakra-ui/react";
-import { theme } from "@chakra-ui/theme";
-import { ChatProvider } from "./hooks/useChat";
-import { Dashboard } from "./routes/dashboard";
-import { GenderSelectionPage } from "./components/GenderSelection";
-import { EnterWeight } from "./components/EnterWeight";
-import { SignupForm } from "./routes/signup-form";
 
 const App = () => {
   useEffect(() => {

@@ -10,7 +10,7 @@ import React from "react";
 import FemaleOutline from "../assets/female-outline.png";
 import MaleOutline from "../assets/male-outline.png";
 
-export const GenderSelectionPage = ({ nextPageCallback }) => {
+export const GenderSelectionPage = ({ nextPageCallback, setUserMetadata }) => {
   const cardWidth = useBreakpointValue({ base: "200px", sm: "300px" });
   const cardHeight = useBreakpointValue({ base: "300px", sm: "400px" });
 
@@ -34,7 +34,11 @@ export const GenderSelectionPage = ({ nextPageCallback }) => {
     </Box>
   );
 
-  const handleCardClick = () => {
+  const handleCardClick = (gender) => {
+    setUserMetadata((prev) => ({
+      ...prev,
+      sex: gender,
+    }));
     nextPageCallback();
   };
 

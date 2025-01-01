@@ -16,13 +16,27 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-export const EnterWeight = ({ nextPageCallback }) => {
+export const EnterWeight = ({ nextPageCallback, setUserMetadata }) => {
   const Units = {
     Pounds: "Pounds",
     Kilograms: "Kilograms",
   };
   const [selectedUnit, setSelectedUnit] = useState(Object.keys(Units)[0]);
   const [weight, setWeight] = useState(15);
+
+  const convertPoundsToKilos = (weight) => {
+    // 1 pound ≈ 0.45 kilograms
+    return weight * 0.453592; // Convert pounds to kilograms
+  };
+
+  const handleButtonClick = () => {
+    setUserMetadata((prev) => ({
+      ...prev,
+      weight:
+        selectedUnit === Units.Pounds ? convertPoundsToKilos(weight) : weight,
+    }));
+    nextPageCallback();
+  };
 
   const handleMenuClick = (unit) => {
     setSelectedUnit(unit);
@@ -71,7 +85,7 @@ export const EnterWeight = ({ nextPageCallback }) => {
               </Menu>
               <Button
                 variant="solid"
-                onClick={nextPageCallback}
+                onClick={handleButtonClick}
                 display={["none", "block"]}
               >
                 Next
@@ -79,7 +93,7 @@ export const EnterWeight = ({ nextPageCallback }) => {
             </HStack>
             <Button
               variant="solid"
-              onClick={nextPageCallback}
+              onClick={handleButtonClick}
               width="100%"
               display={["block", "none"]}
             >
