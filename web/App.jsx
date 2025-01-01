@@ -25,7 +25,9 @@ import { ChakraBaseProvider, Box } from "@chakra-ui/react";
 import { theme } from "@chakra-ui/theme";
 import { ChatProvider } from "./hooks/useChat";
 import { Dashboard } from "./routes/dashboard";
-import { GenderSelectionPage } from "./routes/gender-selection";
+import { GenderSelectionPage } from "./components/GenderSelection";
+import { EnterWeight } from "./components/EnterWeight";
+import { SignupForm } from "./routes/signup-form";
 
 const App = () => {
   useEffect(() => {
@@ -87,8 +89,8 @@ const App = () => {
         />
         <Route path="reset-password" element={<ResetPasswordPage />} />
         <Route path="verify-email" element={<VerifyEmailPage />} />
-        <Route path="dashboard" element={<Dashboard />}></Route>
-        <Route path="gender" element={<GenderSelectionPage />}></Route>
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="signup" element={<SignupForm />} />
       </Route>
     )
   );

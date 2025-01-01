@@ -1,25 +1,23 @@
-import React from "react";
 import {
   Box,
   Flex,
-  Text,
-  useColorModeValue,
   Image,
-  VStack,
-  CircularProgress,
+  Text,
   useBreakpointValue,
+  VStack,
 } from "@chakra-ui/react";
-import MaleOutline from "../assets/male-outline.png";
+import React from "react";
 import FemaleOutline from "../assets/female-outline.png";
+import MaleOutline from "../assets/male-outline.png";
 
-export const GenderSelectionPage = () => {
+export const GenderSelectionPage = ({ nextPageCallback }) => {
   const cardWidth = useBreakpointValue({ base: "200px", sm: "300px" });
   const cardHeight = useBreakpointValue({ base: "300px", sm: "400px" });
 
   const Card = ({ title, image, onClick }) => (
     <Box
       _hover={{ cursor: "pointer" }}
-      borderWidth="2px"
+      borderWidth="1px"
       borderRadius="md"
       w={cardWidth}
       h={cardHeight}
@@ -36,8 +34,8 @@ export const GenderSelectionPage = () => {
     </Box>
   );
 
-  const handleCardClick = (gender) => {
-    alert(`You selected: ${gender}`);
+  const handleCardClick = () => {
+    nextPageCallback();
   };
 
   return (
@@ -54,7 +52,7 @@ export const GenderSelectionPage = () => {
               align="center"
               justify="center"
               w="100px"
-              display={["none", "none", "flex"]}
+              display={["none", "none", "none", "flex"]}
             >
               <Text fontSize="2xl" color="gray.500" textAlign="center">
                 — OR —
@@ -67,19 +65,6 @@ export const GenderSelectionPage = () => {
             />
           </Flex>
         </Flex>
-      </Flex>
-
-      <Flex
-        position="absolute"
-        bottom="4"
-        right="4"
-        direction="column"
-        align="center"
-      >
-        <CircularProgress value={30} size="40px" color="gray.500" />
-        <Text mb="2" mt="1" fontWeight="semibold">
-          Step 1/3
-        </Text>
       </Flex>
     </Box>
   );
